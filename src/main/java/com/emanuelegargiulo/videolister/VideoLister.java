@@ -36,6 +36,7 @@ public class VideoLister {
         f.setApproveButtonText("Open");
         f.setDialogType(JFileChooser.OPEN_DIALOG);
         f.setDialogTitle("Pick a directory to list");
+        f.setVisible(true);
         result = f.showOpenDialog(null);
         if (result == JFileChooser.CANCEL_OPTION) {
             System.out.println("Cancel was selected");
