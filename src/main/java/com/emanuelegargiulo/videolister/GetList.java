@@ -63,7 +63,7 @@ public class GetList {
             writer.close();
             File tmpDir = new File(directory + filename);
             if (tmpDir.exists()) {
-                picker.textLogger(directory + filename);
+                picker.textLogger(directory + filename + " OK");
             } else {
                 picker.textLogger("Errore nella scrittura della lista");
             }

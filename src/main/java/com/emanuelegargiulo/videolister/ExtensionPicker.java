@@ -16,6 +16,8 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class ExtensionPicker extends javax.swing.JFrame {
 
+    public boolean firstAttempt = true;
+
     /**
      * Creates new form ExtensionPicker
      */
@@ -249,8 +251,16 @@ public class ExtensionPicker extends javax.swing.JFrame {
         if (documentsCB.isSelected()) {
             ExtensionsAdder.addDocs();
         }
-        System.out.println("Chosen Path: " + chooser.getSelectedFile().getAbsolutePath());
-        GetList.getList(chooser.getSelectedFile().getAbsolutePath(), ExtensionsAdder.getFilter(), this);
+        try {
+            GetList.getList(chooser.getSelectedFile().getAbsolutePath(), ExtensionsAdder.getFilter(), this);
+        } catch (NullPointerException e) {
+            if (firstAttempt) {
+                GetList.getList(chooser.getCurrentDirectory().getAbsolutePath(), ExtensionsAdder.getFilter(), this);
+                firstAttempt = false;
+            } else {
+                textLogger("ERROR. Try selecting a different location");
+            }
+        }
     }//GEN-LAST:event_GenListButtonActionPerformed
 
     private void chooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooserActionPerformed
@@ -262,8 +272,18 @@ public class ExtensionPicker extends javax.swing.JFrame {
     }//GEN-LAST:event_customExtActionPerformed
 
     private void GenListAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenListAllActionPerformed
-        System.out.println("Chosen Path: " + chooser.getSelectedFile().getAbsolutePath());
-        GetList.getList(chooser.getSelectedFile().getAbsolutePath(), null, this);
+        try {
+            GetList.getList(chooser.getSelectedFile().getAbsolutePath(), ExtensionsAdder.getFilter(), this);
+        } catch (NullPointerException e) {
+            if (firstAttempt) {
+                GetList.getList(chooser.getCurrentDirectory().getAbsolutePath(), null, this);
+                System.out.println("First attempt at folder selection has failed. Retrying...");
+                firstAttempt = false;
+            } else {
+                textLogger("ERROR. Try selecting a different location");
+                System.out.println("ERROR. Try selecting a different location");
+            }
+        }
     }//GEN-LAST:event_GenListAllActionPerformed
 
     /**
