@@ -45,7 +45,9 @@ public class GetList {
                 //Discards some temporary/metadata files
                 if (!(firstChar.equals('$')) && !(firstChar.equals('.'))) {
                     //System.out.println(name);
-                    printWriter.println(name);
+                    printWriter.print(name);
+                    printWriter.print(" ");
+                    printWriter.println(FileInfo.getFileSizeMegaBytes(file));
                 }
             }
 
