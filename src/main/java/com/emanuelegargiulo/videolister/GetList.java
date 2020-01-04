@@ -20,13 +20,13 @@ import java.util.Date;
  */
 public class GetList {
 
-    public static void getList(String directory, String[] filter) {
+    public static void getList(String directory, String[] filter, ExtensionPicker picker) {
         SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyHHmm");
 
         Date date = new Date();
 
         String filename = "/fileList" + formatter.format(date) + ".txt";
-        System.out.println(directory+filename);
+        System.out.println(directory + filename);
 
         PrintWriter printWriter;
         try {
@@ -50,7 +50,13 @@ public class GetList {
             }
 
             printWriter.close();
-            JOptionPane.showMessageDialog(null, "All done, list saved in " + directory + "" + filename);
+           // JOptionPane.showMessageDialog(null, "All done, list saved in " + directory + filename);
+            File tmpDir = new File(directory + filename);
+            if (tmpDir.exists()) {
+                picker.textLogger(directory + "" + filename);
+            } else {
+                picker.textLogger("Errore nella scrittura della lista");
+            }
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "FileNotFoundException");
             System.exit(0);
