@@ -11,12 +11,14 @@ package com.emanuelegargiulo.videolister;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.commons.io.FileUtils;
@@ -27,10 +29,12 @@ public class VideoLister {
     public static JFileChooser f;
     public static boolean secondError = false;
     public static int result;
+    public static ArrayList<String> extensions = new ArrayList<String>();
     public static String[] filter = {"avi", "mkv", "m4v", "mov", "webm", "flv", "vob", "ogv", "ogg", "gif", "gifv", "mng", "ts", "mts", "m2ts", "qt", "wmv", "yuv", "rm", "rmvb", "asf", "amv", "mp4", "m4p", "m4v", "mpg", "mp2", "mpeg", "mpe", "mpv", "m2v", "svi", "3gp", "3g2", "mxf", "roq", "nsv", "flv", "f4v", "f4p", "f4a", "f4b"};
 
     public static void main(String[] args) {
-        System.out.println(getVersion());
+        JFrame picker;
+        /* 
         f = new JFileChooser();
         f.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         f.setApproveButtonText("Open");
@@ -42,71 +46,20 @@ public class VideoLister {
             System.out.println("Cancel was selected");
             System.exit(1);
         }
+
+        if (result == JFileChooser.APPROVE_OPTION) {
+            System.out.println("ApproveOption");
+            picker = new ExtensionPicker(directory);           
+        }
         directory = f.getSelectedFile().getAbsolutePath();
 
         System.out.println(f.getCurrentDirectory().getAbsolutePath());
         System.out.println(f.getSelectedFile().getAbsolutePath());
         System.out.println("Directory: " + directory);
+         */
+        picker = new ExtensionPicker(directory);
 
-        getList(directory, filter);
-
-    }
-
-    public static void getList(String directory, String[] filter) {
-        PrintWriter printWriter;
-        try {
-            printWriter = new PrintWriter(directory + "/videoList.txt");
-
-            File dir = new File(directory);
-            List<File> files = (List<File>) FileUtils.listFiles(dir, filter, true);
-
-            files.sort((File m1, File m2) -> m1.getName().compareToIgnoreCase(m2.getName()));
-
-            System.out.println(files);
-
-            for (File file : files) {
-                String name = file.getName();
-                Character firstChar = name.charAt(0);
-                //Discards some temporary/metadata files
-                if (!(firstChar.equals('$')) && !(firstChar.equals('.'))) {
-                    //System.out.println(name);
-                    printWriter.println(name);
-                }
-            }
-
-            printWriter.close();
-            JOptionPane.showMessageDialog(null, "All done, list saved in " + directory + "/videoList.txt");
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(VideoLister.class.getName()).log(Level.SEVERE, null, ex);
-            if (!secondError) {
-                //If it's the first time i meet this error, maybe the directory was entered instead of just picked...             
-                System.out.println("First File Not Found Error... retrying with currentDirectory");
-                secondError = true;
-                directory = f.getCurrentDirectory().getAbsolutePath();
-                getList(directory, filter);
-            } else {
-                System.out.println("(Final) File Not Found Error...");
-                JOptionPane.showMessageDialog(null, "I/O Error.\n Did you pick a readonly location?");
-            }
-
-        } catch (NullPointerException ex) {
-            Logger.getLogger(VideoLister.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Null Pointer Exception");
-
-        }
-    }
-
-    private static int getVersion() {
-        String version = System.getProperty("java.version");
-        if (version.startsWith("1.")) {
-            version = version.substring(2, 3);
-        } else {
-            int dot = version.indexOf(".");
-            if (dot != -1) {
-                version = version.substring(0, dot);
-            }
-        }
-        return Integer.parseInt(version);
+        // GetList.getList(directory, extensions.toArray(new String[extensions.size()]));
     }
 
 }
