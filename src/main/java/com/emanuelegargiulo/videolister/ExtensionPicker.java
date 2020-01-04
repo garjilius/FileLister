@@ -5,18 +5,10 @@
  */
 package com.emanuelegargiulo.videolister;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -24,17 +16,14 @@ import javax.swing.border.TitledBorder;
  */
 public class ExtensionPicker extends javax.swing.JFrame {
 
-    private JLabel description;
-    private JPanel panelDescription = new JPanel();
-    private String directory;
-
     /**
      * Creates new form ExtensionPicker
      */
-    public ExtensionPicker(String dir) {
-        directory = dir;
+    public ExtensionPicker() {
         this.setVisible(true);
         initComponents();
+        chooser.setControlButtonsAreShown(false);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -65,7 +54,6 @@ public class ExtensionPicker extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Pick file types");
-        setAlwaysOnTop(true);
         setResizable(false);
 
         jLabel1.setText("Select the type of files you want to list");
@@ -254,7 +242,7 @@ public class ExtensionPicker extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -281,9 +269,10 @@ public class ExtensionPicker extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ExtensionPicker(null).setVisible(true);
+                new ExtensionPicker().setVisible(true);
             }
         });
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
     }
 
 
