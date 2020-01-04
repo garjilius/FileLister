@@ -46,7 +46,7 @@ public class ExtensionPicker extends javax.swing.JFrame {
         GenListButton = new javax.swing.JButton();
         customExt = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        GenListAll = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         chooser = new javax.swing.JFileChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -88,7 +88,7 @@ public class ExtensionPicker extends javax.swing.JFrame {
             }
         });
 
-        GenListButton.setText("Generate List");
+        GenListButton.setText("List Selected Types");
         GenListButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 GenListButtonActionPerformed(evt);
@@ -103,7 +103,12 @@ public class ExtensionPicker extends javax.swing.JFrame {
 
         jLabel3.setText("Add further custom extensions, separated by commas (es: zip, exe)");
 
-        jLabel4.setText("To list all type of files, do not check any box");
+        GenListAll.setText("List All Files");
+        GenListAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GenListAllActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -125,15 +130,11 @@ public class ExtensionPicker extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(GenListButton, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(GenListButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(GenListAll))))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {audioCB, documentsCB, picturesCB, videoCB});
@@ -141,9 +142,7 @@ public class ExtensionPicker extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(audioCB)
                     .addComponent(videoCB)
@@ -154,7 +153,9 @@ public class ExtensionPicker extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(customExt, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(GenListButton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(GenListButton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(GenListAll, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jLabel2.setText("No selection lists all files");
@@ -235,7 +236,6 @@ public class ExtensionPicker extends javax.swing.JFrame {
     }//GEN-LAST:event_documentsCBActionPerformed
 
     private void GenListButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenListButtonActionPerformed
-        //GetList.getList(directory, extensions.toArray(new String[extensions.size()]));
         addCustExt();
         if (audioCB.isSelected()) {
             ExtensionsAdder.addAudio();
@@ -249,7 +249,8 @@ public class ExtensionPicker extends javax.swing.JFrame {
         if (documentsCB.isSelected()) {
             ExtensionsAdder.addDocs();
         }
-        System.out.println(chooser.getSelectedFile().getAbsolutePath());
+        System.out.println("Chosen Path: " + chooser.getSelectedFile().getAbsolutePath());
+        System.out.println("Filter: " + ExtensionsAdder.getFilter());
         GetList.getList(chooser.getSelectedFile().getAbsolutePath(), ExtensionsAdder.getFilter(), this);
     }//GEN-LAST:event_GenListButtonActionPerformed
 
@@ -260,6 +261,12 @@ public class ExtensionPicker extends javax.swing.JFrame {
     private void customExtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customExtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_customExtActionPerformed
+
+    private void GenListAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenListAllActionPerformed
+        System.out.println("Chosen Path: " + chooser.getSelectedFile().getAbsolutePath());
+        System.out.println("Filter: " + ExtensionsAdder.getFilter());
+        GetList.getList(chooser.getSelectedFile().getAbsolutePath(), null, this);
+    }//GEN-LAST:event_GenListAllActionPerformed
 
     /**
      * @param args the command line arguments
@@ -296,11 +303,11 @@ public class ExtensionPicker extends javax.swing.JFrame {
         });
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
     }
-    
+
     public void textLogger(String text) {
-        loggerTextarea.append(text+"\n");
+        loggerTextarea.append(text + "\n");
     }
-    
+
     public void addCustExt() {
         String toAdd = customExt.getText();
         String[] extensions = toAdd.split(",");
@@ -309,6 +316,7 @@ public class ExtensionPicker extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton GenListAll;
     private javax.swing.JButton GenListButton;
     private javax.swing.JCheckBox audioCB;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -319,7 +327,6 @@ public class ExtensionPicker extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea loggerTextarea;
