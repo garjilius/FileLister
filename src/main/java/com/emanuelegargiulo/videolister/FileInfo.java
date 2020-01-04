@@ -19,8 +19,12 @@ public class FileInfo {
 
     public static String getFileSizeMegaBytes(File file) {
         double size = file.length() / (1024 * 1024);
-        return (int) file.length() / (1024 * 1024) + " mb";
+        return (double) file.length() / (1024 * 1024) + " mb";
 
+    }
+    
+        public static String getSizeMB(File file) {
+        return (int) file.length() / (1024 * 1024)+"";
     }
 
     public static String getFileSizeKiloBytes(File file) {

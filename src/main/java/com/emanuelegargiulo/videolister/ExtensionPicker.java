@@ -250,7 +250,6 @@ public class ExtensionPicker extends javax.swing.JFrame {
             ExtensionsAdder.addDocs();
         }
         System.out.println("Chosen Path: " + chooser.getSelectedFile().getAbsolutePath());
-        System.out.println("Filter: " + ExtensionsAdder.getFilter());
         GetList.getList(chooser.getSelectedFile().getAbsolutePath(), ExtensionsAdder.getFilter(), this);
     }//GEN-LAST:event_GenListButtonActionPerformed
 
@@ -264,7 +263,6 @@ public class ExtensionPicker extends javax.swing.JFrame {
 
     private void GenListAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenListAllActionPerformed
         System.out.println("Chosen Path: " + chooser.getSelectedFile().getAbsolutePath());
-        System.out.println("Filter: " + ExtensionsAdder.getFilter());
         GetList.getList(chooser.getSelectedFile().getAbsolutePath(), null, this);
     }//GEN-LAST:event_GenListAllActionPerformed
 
