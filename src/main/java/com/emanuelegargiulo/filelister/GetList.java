@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.emanuelegargiulo.videolister;
+package com.emanuelegargiulo.filelister;
 
 import com.opencsv.CSVWriter;
 import java.io.File;
@@ -15,11 +15,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- *
+ * Class responsible of generating the file list from a given folder and extensions filter
  * @author emanuelegargiulo
  */
 public class GetList {
 
+    /**
+     * Returns the list of files of chosen extensions from the given directory
+     * @param directory : files in this directory will be lister
+     * @param filter : extensions of the file to list
+     * @param picker : graphic window, passed as a parameter to retrieve data from the JFileChooser
+     */
     public static void getList(String directory, String[] filter, ExtensionPicker picker) {
         SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyHHmm");
 
@@ -61,6 +67,7 @@ public class GetList {
 
             // closing writer connection 
             writer.close();
+            //If the file has been created correctly, a message will be added to the built in textarea
             File tmpDir = new File(directory + filename);
             if (tmpDir.exists()) {
                 picker.textLogger(directory + filename + " OK");

@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.emanuelegargiulo.videolister;
+package com.emanuelegargiulo.filelister;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**
- *
+ * Class responsible of showing the graphic component of the project.
  * @author emanuelegargiulo
  */
 public class ExtensionPicker extends javax.swing.JFrame {
@@ -22,10 +22,10 @@ public class ExtensionPicker extends javax.swing.JFrame {
      * Creates new form ExtensionPicker
      */
     public ExtensionPicker() {
-        this.setVisible(true);
         initComponents();
         chooser.setControlButtonsAreShown(false);
         setLocationRelativeTo(null);
+        this.setVisible(true);
     }
 
     /**
@@ -287,6 +287,7 @@ public class ExtensionPicker extends javax.swing.JFrame {
     }//GEN-LAST:event_GenListAllActionPerformed
 
     /**
+     * Main class, launches ExtensionPicker after setting the app's look and feel
      * @param args the command line arguments
      */
     public static void main(String args[]) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
@@ -316,16 +317,34 @@ public class ExtensionPicker extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ExtensionPicker().setVisible(true);
+                try {
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(ExtensionPicker.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InstantiationException ex) {
+                    Logger.getLogger(ExtensionPicker.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(ExtensionPicker.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (UnsupportedLookAndFeelException ex) {
+                    Logger.getLogger(ExtensionPicker.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                new ExtensionPicker();
             }
         });
-        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
     }
 
+    /**
+     * Allows output to the built-in text area
+     * @param text : the text to write in the textarea
+     */
     public void textLogger(String text) {
         loggerTextarea.append(text + "\n");
     }
 
+    /**
+     * Adds the custom extensions typed by the user to the filter
+     */
     public void addCustExt() {
         String toAdd = customExt.getText();
         String[] extensions = toAdd.split(",");
